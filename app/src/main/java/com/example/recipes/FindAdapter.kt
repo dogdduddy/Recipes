@@ -20,6 +20,6 @@ class FindAdapter  : RecyclerView.Adapter<FindAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
-
+        //Todo
     }
 }
