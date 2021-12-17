@@ -41,13 +41,16 @@ class MainActivity : AppCompatActivity() {
                                 for(j in kind) { if(document.get(j) != null) int_str += document.get(j).toString()+" " }
                                 recipeList.add(arrayOf(document.id.toString(), int_str, document.get("시간").toString()))
                             }
+                            // 원래는 반복문 밖에서 구현했지만. DB를 다 읽고 실행되는게 아니라 도중에 실행되서
+                            // 원하는 데이터가 전부 들어오지 않을 때가 잇다.
+                            // 현재는 불필요하게 많이 호출하게 되겠지만 그래도 데이터가 잘 나온다.
+                            adapter = FindAdapter(recipeList, applicationContext, database)
+                            binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+                            binding.recyclerView.itemAnimator = DefaultItemAnimator()
+                            binding.recyclerView.adapter = adapter
                         }
                 }
             }
-            adapter = FindAdapter(recipeList, applicationContext, database)
-            binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
-            binding.recyclerView.itemAnimator = DefaultItemAnimator()
-            binding.recyclerView.adapter = adapter
         }
     }
 
