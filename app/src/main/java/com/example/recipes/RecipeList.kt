@@ -2,6 +2,7 @@ package com.example.recipes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recipes.databinding.ActivityMainBinding
@@ -21,6 +22,10 @@ class RecipeList : AppCompatActivity() {
         binding = ActivityRecipeListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         database = FirebaseFirestore.getInstance() // DB reference
+
+        binding.backSpace.setOnClickListener {
+            Log.d(TAG, "test1")
+            finish() }
 
         database.collection("Recipes").get().addOnSuccessListener { documents ->
             val recipeList = mutableListOf<Array<String>>()

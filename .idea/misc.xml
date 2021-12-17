@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/backspace.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/drawable/find_glass.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/openbook.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/recipebook.xml" value="0.22864583333333333" />
         <entry key="app/src/main/res/drawable/recipelogo.xml" value="0.38425925925925924" />
         <entry key="app/src/main/res/drawable/searchbar.xml" value="0.22864583333333333" />

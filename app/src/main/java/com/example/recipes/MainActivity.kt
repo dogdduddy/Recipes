@@ -1,5 +1,6 @@
 package com.example.recipes
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         database = FirebaseFirestore.getInstance() // DB reference
         loadIngredient()
+
+        binding.intentBtn.setOnClickListener {
+            var intent = Intent(this, RecipeList::class.java)
+            startActivity(intent)
+        }
+
+
+
         binding.button.setOnClickListener{
             // 입력한 값들을 각가의 재료로 나눔
             var str = binding.findwindow.text.toString().split(",")
