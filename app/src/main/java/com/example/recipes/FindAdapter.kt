@@ -23,10 +23,12 @@ class FindAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        // recipe = {음식 이름, 재료, 요리 시간}
         val recipe = recipeList[position]
 
         holder!!.title.text = recipe[0]
-        holder.content.text = recipe[1]
+        holder.content.text = "재료 : " +recipe[1]
+        holder.time.text = recipe[2]
 
         //holder.edit.setOnClickListener { updateNote(recipe) }
         //holder.delete.setOnClickListener { deleteNote(recipe.id!!, position) }

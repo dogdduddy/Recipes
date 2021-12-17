@@ -14,6 +14,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var TAG = "MainActivity"
     private var ing_hash = HashMap<String,String>()
+    private val kind = arrayOf("육류", "곡물", "수산물", "채소","유제품","양념","면","과일","조미료")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +35,13 @@ class MainActivity : AppCompatActivity() {
                 if(ing_hash[str[i].trim()]!=null) {
                     refs.whereEqualTo(ing_hash[str[i].trim()].toString(), str[i].trim()).get()
                         .addOnSuccessListener { documents ->
-                            Log.d(TAG,documents.toString())
                             for (document in documents) {
-                                // 레시피 검색해서 나온 이름을 저장
-                                recipeList.add(arrayOf(document.id.toString(), document.get("시간").toString()))
-                                Log.d(TAG, document.id.toString())
+                                // 레시피 검색해서 나온 이름, 재료, 시간 저장
+                                var int_str:String = ""
+                                for(j in kind) { if(document.get(j) != null) int_str += document.get(j).toString()+" " }
+                                recipeList.add(arrayOf(document.id.toString(), int_str, document.get("시간").toString()))
                             }
-                        }git
+                        }
                 }
             }
             adapter = FindAdapter(recipeList, applicationContext, database)
