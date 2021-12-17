@@ -26,6 +26,17 @@ class FindAdapter(
         // recipe = {음식 이름, 재료, 요리 시간}
         val recipe = recipeList[position]
 
+        //holder!!.title.text = recipe.title
+        //holder.content.text = "재료 : " +recipe.ingre
+        //holder.time.text = recipe.time
+        when(position%5) {
+            0 -> holder.food.setImageResource(R.drawable.buckwheat)
+            1 -> holder.food.setImageResource(R.drawable.bibim)
+            2 -> holder.food.setImageResource(R.drawable.ham)
+            3 -> holder.food.setImageResource(R.drawable.salad)
+            4 -> holder.food.setImageResource(R.drawable.steak)
+        }
+
         holder!!.title.text = recipe[0]
         holder.content.text = "재료 : " +recipe[1]
         holder.time.text = recipe[2]
@@ -42,6 +53,7 @@ class FindAdapter(
         internal var title: TextView
         internal var content: TextView
         internal var time: TextView
+        internal var food: ImageView
         //internal var edit: ImageView
         //internal var delete: ImageView
 
@@ -49,6 +61,8 @@ class FindAdapter(
             title = view.findViewById(R.id.findTitle)
             content = view.findViewById(R.id.findContent)
             time = view.findViewById(R.id.findTime)
+            food = view.findViewById(R.id.foodimg)
+
             //edit = view.findViewById(R.id.ivEdit)
             //delete = view.findViewById(R.id.ivDelete)
         }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recipes.databinding.ActivityMainBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: FindAdapter
@@ -15,7 +16,6 @@ class MainActivity : AppCompatActivity() {
     private var TAG = "MainActivity"
     private var ing_hash = HashMap<String,String>()
     private val kind = arrayOf("육류", "곡물", "수산물", "채소","유제품","양념","면","과일","조미료")
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,17 +37,19 @@ class MainActivity : AppCompatActivity() {
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
                                 // 레시피 검색해서 나온 이름, 재료, 시간 저장
+                                // note 객체처럼 만들어서 처리하려 했찌만 문서마다 필드의 종류가 달라서 안됨
                                 var int_str:String = ""
                                 for(j in kind) { if(document.get(j) != null) int_str += document.get(j).toString()+" " }
-                                recipeList.add(arrayOf(document.id.toString(), int_str, document.get("시간").toString()))
+                                //Log.d(TAG,document.get)
+                                recipeList.add(arrayOf(document.id, int_str, document.get("시간").toString()))
                             }
                             // 원래는 반복문 밖에서 구현했지만. DB를 다 읽고 실행되는게 아니라 도중에 실행되서
                             // 원하는 데이터가 전부 들어오지 않을 때가 잇다.
                             // 현재는 불필요하게 많이 호출하게 되겠지만 그래도 데이터가 잘 나온다.
                             adapter = FindAdapter(recipeList, applicationContext, database)
-                            binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
-                            binding.recyclerView.itemAnimator = DefaultItemAnimator()
-                            binding.recyclerView.adapter = adapter
+                            binding.FindrecyclerView.layoutManager = LinearLayoutManager(applicationContext)
+                            binding.FindrecyclerView.itemAnimator = DefaultItemAnimator()
+                            binding.FindrecyclerView.adapter = adapter
                         }
                 }
             }

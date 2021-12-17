@@ -6,33 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/recipelogo"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="35dp"
+        android:id="@+id/intentBtn"
+        android:background="#FFFFFFFF"
+        android:src="@drawable/recipebook"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
     <EditText
         android:id="@+id/findwindow"
         android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="100dp"
-        android:background="#d2d2d2"
+        android:layout_height="48dp"
+        android:layout_marginTop="140dp"
+        android:background="@drawable/searchbar"
         android:gravity="center"
-        android:hint="test1"
+        android:hint="Search"
+        android:maxLines="1"
         android:privateImeOptions="defaultInputmode=korean"
-        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:text="Btn"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="13dp"
+        android:background="#00000000"
+        android:drawableBottom="@drawable/search"
         app:layout_constraintBottom_toBottomOf="@+id/findwindow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/findwindow"
-        app:layout_constraintTop_toTopOf="@+id/findwindow" />
+        app:layout_constraintEnd_toEndOf="@+id/findwindow"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/findwindow"
+        app:layout_constraintTop_toTopOf="@+id/findwindow"
+        app:layout_constraintVertical_bias="1.0" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:padding="40dp"
-        android:id="@+id/recyclerView"
+        android:id="@+id/FindrecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/findwindow"

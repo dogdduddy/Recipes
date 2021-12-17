@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.15" />
-        <entry key="app/src/main/res/layout/item_find.xml" value="0.22" />
+        <entry key="app/src/main/res/drawable/find_glass.xml" value="0.3921875" />
+        <entry key="app/src/main/res/drawable/recipebook.xml" value="0.22864583333333333" />
+        <entry key="app/src/main/res/drawable/recipelogo.xml" value="0.38425925925925924" />
+        <entry key="app/src/main/res/drawable/searchbar.xml" value="0.22864583333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_recipe_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_find.xml" value="0.33" />
       </map>
     </option>
   </component>
