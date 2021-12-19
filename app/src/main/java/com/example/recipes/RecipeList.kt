@@ -23,16 +23,15 @@ class RecipeList : AppCompatActivity() {
         setContentView(binding.root)
         database = FirebaseFirestore.getInstance() // DB reference
 
-        binding.backSpace.setOnClickListener {
-            Log.d(TAG, "test1")
-            finish() }
+        binding.backSpace.setOnClickListener { finish() }
 
         database.collection("Recipes").get().addOnSuccessListener { documents ->
             val recipeList = mutableListOf<Array<String>>()
             for(doc in documents) {
+                val a = doc.toObject(Find::class.java)
+                Log.d(TAG," ttt " +a.time+" / " +a.title)
                 var int_str:String = ""
                 for(j in kind) { if(doc.get(j) != null) int_str += doc.get(j).toString()+" " }
-
                 recipeList.add(arrayOf(doc.id,int_str,doc.get("시간").toString()))
             }
             adapter = FindAdapter(recipeList, applicationContext, database)

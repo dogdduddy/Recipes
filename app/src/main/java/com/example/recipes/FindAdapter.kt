@@ -1,6 +1,7 @@
 package com.example.recipes
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,10 +37,10 @@ class FindAdapter(
             3 -> holder.food.setImageResource(R.drawable.salad)
             4 -> holder.food.setImageResource(R.drawable.steak)
         }
-
         holder!!.title.text = recipe[0]
         holder.content.text = "재료 : " +recipe[1]
         holder.time.text = recipe[2]
+        holder.bind(recipe)
 
         //holder.edit.setOnClickListener { updateNote(recipe) }
         //holder.delete.setOnClickListener { deleteNote(recipe.id!!, position) }
@@ -56,7 +57,14 @@ class FindAdapter(
         internal var food: ImageView
         //internal var edit: ImageView
         //internal var delete: ImageView
-
+        fun bind(item:Array<String>) {
+            itemView.setOnClickListener {
+                item[0]
+                Intent(context, ContentActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }.run { context.startActivity(this) }
+            }
+        }
         init {
             title = view.findViewById(R.id.findTitle)
             content = view.findViewById(R.id.findContent)

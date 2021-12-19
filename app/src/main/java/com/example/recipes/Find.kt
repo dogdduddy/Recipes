@@ -3,12 +3,15 @@ package com.example.recipes
 class Find {
     var id: String? = null // 프로퍼티의 getter, setter
     var title: String? = null
-    var ingre: Array<String>? = null
+    var ingre: ArrayList<String>? = null
     var content: String? = null
     var time: String? = null
+    var meet:String? = null
+    var veget: String? = null
+    var source:String? = null
 
     constructor() {} // 디폴트 생성자가 존재해야 deserialization 가
-    constructor(id: String, title: String, ingre:Array<String>, content: String, time:String) {
+    constructor(id: String, title: String, ingre:ArrayList<String>, content: String, time:String, veget:String) {
         this.id = id
         this.title = title
         this.ingre = ingre
@@ -17,9 +20,16 @@ class Find {
 
     }
 
-    constructor(title: String, ingre:Array<String>, content: String, time:String) {
-        this.title = title
+    constructor(time:String, source: String, ingre:ArrayList<String>, meet: String, veget:String) {
+        this.time = time
+        this.source = source
         this.ingre = ingre
+        this.meet = meet
+        this.veget = veget
+    }
+    constructor(title: String, time:String, t:String, content: String, a:String ) {
+        this.title = title
+        this.meet = a
         this.content = content
         this.time = time
     }
