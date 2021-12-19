@@ -15,7 +15,7 @@ class RecipeList : AppCompatActivity() {
     private lateinit var adapter: FindAdapter
     private lateinit var database: FirebaseFirestore
     private lateinit var binding: ActivityRecipeListBinding
-    private lateinit var recipeList : MutableList<Array<Any>>
+    private var recipeList = mutableListOf<Array<Any>>()
     private var TAG = "RecipeList"
     private val kind = arrayOf("육류", "곡물", "수산물", "채소","유제품","양념","면","과일","조미료")
 
@@ -24,15 +24,15 @@ class RecipeList : AppCompatActivity() {
         setContentView(R.layout.activity_recipe_list)
         binding = ActivityRecipeListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        database = FirebaseFirestore.getInstance() // DB reference
+        database = FirebaseFirestore.getInstance()
 
         database.collection("Recipes").get().addOnSuccessListener { documents ->
             for(doc in documents) {
                 var int_str = ""
-                var temp = doc.get("요리").toString()
-                var cook = temp.substring(1,temp.length-1).split("#, ")
+                //var temp = doc.get("요리").toString()
+                //var cook = temp.substring(1,temp.length-1).split("#, ")
                 for(j in kind) { if(doc.get(j) != null) int_str += doc.get(j).toString()+" " }
-                recipeList.add(arrayOf(doc.id,int_str,cook,doc.get("시간").toString()))
+                recipeList.add(arrayOf(doc.id,int_str,doc.get("요리") as List<String>,doc.get("시간").toString()))
             }
             adapter = FindAdapter(recipeList, applicationContext, database)
             binding.ListRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
@@ -43,20 +43,7 @@ class RecipeList : AppCompatActivity() {
         binding.backSpace.setOnClickListener { finish() }
         binding.addBtn.setOnClickListener {
             var intent = Intent(this, AddRecipeActivity::class.java)
-            startActivity(intent)
+            startActivity(intent)ß
         }
-    }
-    private fun addRecipe() {
-        var add = HashMap<String, Any>()
-        add.put("asd","asd")
-        database!!.collection("Recipes").document("테스트").set(add)
-            .addOnSuccessListener { documentReference ->
-                Log.e(TAG, "DocumentSnapshot written with ID: " + documentReference)
-                Toast.makeText(applicationContext, "Note has been added!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Log.e(TAG, "Error adding Note document", e)
-                Toast.makeText(applicationContext, "Note could not be added!", Toast.LENGTH_SHORT).show()
-            }
     }
 }

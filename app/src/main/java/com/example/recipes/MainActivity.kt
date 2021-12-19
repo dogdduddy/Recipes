@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.button.setOnClickListener{
             // 입력한 값들을 각가의 재료로 나눔
+            Log.d(TAG,binding.findwindow.text.toString())
             var str = binding.findwindow.text.toString().split(",")
             // 식재료의 분류에 맞춰서 대입
             val refs = database.collection("Recipes")
