@@ -14,14 +14,17 @@ class ContentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_content)
-        var id = getIntent().getStringExtra("id")
-        var content = getIntent().getStringExtra("content")
-        var cook = getIntent().getStringArrayExtra("cook")
-        var time = getIntent().getStringExtra("time")
+        binding = ActivityContentBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        var cook = getIntent().getStringArrayExtra("cook")
+
+        binding.foodName.text = getIntent().getStringExtra("id")
+        binding.ingredient.text = "재료 :  " + getIntent().getStringExtra("content")!!.trim().replace(" ", ", ")
+        binding.time.text = getIntent().getStringExtra("time")
         binding.backSpace.setOnClickListener { finish() }
 
-        adapter = ContentAdapter(id, content, cook, time, applicationContext)
+        adapter = ContentAdapter(cook, applicationContext)
         binding.ContentRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
         binding.ContentRecyclerView.itemAnimator = DefaultItemAnimator()
         binding.ContentRecyclerView.adapter = adapter
