@@ -2,6 +2,7 @@ package com.example.recipes
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import org.w3c.dom.Text
 
 class FindAdapter(
-    private val recipeList: MutableList<Array<String>>,
+    private val recipeList: MutableList<Array<Any>>,
     private val context: Context,
     private val firestoreDB: FirebaseFirestore)
     : RecyclerView.Adapter<FindAdapter.ViewHolder>() {
@@ -24,7 +25,7 @@ class FindAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // recipe = {음식 이름, 재료, 요리 시간}
+        // recipe = {음식 이름, 재료, 조리법, 요리 시간}
         val recipe = recipeList[position]
 
         //holder!!.title.text = recipe.title
@@ -37,9 +38,9 @@ class FindAdapter(
             3 -> holder.food.setImageResource(R.drawable.salad)
             4 -> holder.food.setImageResource(R.drawable.steak)
         }
-        holder!!.title.text = recipe[0]
-        holder.content.text = "재료 : " +recipe[1]
-        holder.time.text = recipe[2]
+        holder!!.title.text = recipe[0].toString()
+        holder.content.text = "재료 : " + recipe[1]
+        holder.time.text = recipe[3].toString()
         holder.bind(recipe)
 
         //holder.edit.setOnClickListener { updateNote(recipe) }
@@ -57,11 +58,19 @@ class FindAdapter(
         internal var food: ImageView
         //internal var edit: ImageView
         //internal var delete: ImageView
-        fun bind(item:Array<String>) {
+        fun bind(item:Array<Any>) {
             itemView.setOnClickListener {
-                item[0]
                 Intent(context, ContentActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    // 받아온 값을 다시 List 형태로 변경
+                    val cook = item[2] as List<String>
+
+                    putExtra("id",item[0].toString())
+                    putExtra("content",item[1].toString())
+                    // Extra로 넘기기 위해 Array 타입으로 변경
+                    putExtra("cook",cook.toTypedArray())
+                    putExtra("time",item[3].toString())
+
                 }.run { context.startActivity(this) }
             }
         }

@@ -26,13 +26,13 @@ class RecipeList : AppCompatActivity() {
         binding.backSpace.setOnClickListener { finish() }
 
         database.collection("Recipes").get().addOnSuccessListener { documents ->
-            val recipeList = mutableListOf<Array<String>>()
+            val recipeList = mutableListOf<Array<Any>>()
             for(doc in documents) {
-                val a = doc.toObject(Find::class.java)
-                Log.d(TAG," ttt " +a.time+" / " +a.title)
-                var int_str:String = ""
+                var int_str = ""
+                var temp = doc.get("요리").toString()
+                var cook = temp.substring(1,temp.length-1).split("#, ")
                 for(j in kind) { if(doc.get(j) != null) int_str += doc.get(j).toString()+" " }
-                recipeList.add(arrayOf(doc.id,int_str,doc.get("시간").toString()))
+                recipeList.add(arrayOf(doc.id,int_str,cook,doc.get("시간").toString()))
             }
             adapter = FindAdapter(recipeList, applicationContext, database)
             binding.ListRecyclerView.layoutManager = LinearLayoutManager(applicationContext)

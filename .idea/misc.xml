@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/layout/activity_content.xml" value="0.22708333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_recipe_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_content.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_find.xml" value="0.33" />
       </map>
     </option>
