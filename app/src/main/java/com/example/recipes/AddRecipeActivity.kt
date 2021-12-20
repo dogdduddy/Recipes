@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-gitimport com.example.recipes.databinding.ActivityAddRecipeBinding
+import com.example.recipes.databinding.ActivityAddRecipeBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AddRecipeActivity : AppCompatActivity() {
