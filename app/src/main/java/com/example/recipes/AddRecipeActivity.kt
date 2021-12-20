@@ -4,8 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.example.recipes.databinding.ActivityAddRecipeBinding
-import com.example.recipes.databinding.ActivityRecipeListBinding
+gitimport com.example.recipes.databinding.ActivityAddRecipeBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AddRecipeActivity : AppCompatActivity() {
@@ -24,27 +23,55 @@ class AddRecipeActivity : AppCompatActivity() {
 
         binding.addBtn.setOnClickListener {
             var add = HashMap<String, Any>()
-            if(binding.meetIn != null) add.put("육류","asd")
-            if(binding.grainIn != null) add.put("곡물","asd")
-            if(binding.seasoningIn != null) add.put("수산물","asd")
-            if(binding.vegetableIn != null) add.put("채소","asd")
-            if(binding.dairyProductIn != null) add.put("유제품","asd")
-            if(binding.seasoningIn != null) add.put("양념","asd")
-            if(binding.noodleIn != null) add.put("면","")
-            if(binding.fruitIn != null) add.put("과일","")
-            if(binding.meetIn != null) add.put("조미료","")
-            if(binding.cookStepIn != null) add.put("요리","")
-            if(binding.cooktimeIn != null) add.put("시간","")
-
-            database!!.collection("Recipes").document(binding.foodNameIn.text.toString()).set(add)
-                .addOnSuccessListener { documentReference ->
-                    Log.e(TAG, "DocumentSnapshot written with ID: " + documentReference)
-                    Toast.makeText(applicationContext, "Note has been added!", Toast.LENGTH_SHORT).show()
+            if(!binding.meetIn.text.toString().equals("")) add.put("육류", binding.meetIn.text.toString())
+            if(!binding.grainIn.text.toString().equals("")) add.put("곡물", binding.grainIn.text.toString())
+            if(!binding.seasoningIn.text.toString().equals("")) add.put("양념",binding.seasoningIn.text.toString())
+            if(!binding.vegetableIn.text.toString().equals("")) add.put("채소",binding.vegetableIn.text.toString())
+            if(!binding.dairyProductIn.text.toString().equals("")) add.put("유제품",binding.dairyProductIn.text.toString())
+            if(!binding.seasoningIn.text.toString().equals("")) add.put("수산물",binding.seasoningIn.text.toString())
+            if(!binding.noodleIn.text.toString().equals("")) add.put("면",binding.noodleIn.text.toString())
+            if(!binding.fruitIn.text.toString().equals("")) add.put("과일",binding.fruitIn.text.toString())
+            if(!binding.fruitIn.text.toString().equals("")) add.put("조미료",binding.CondimentIn.text.toString())
+            if(!binding.cookStepIn.text.toString().equals("")) {
+                var add_list = mutableListOf<String>()
+                var temp = ""
+                val Step = binding.cookStepIn.text.toString()
+                Log.d(TAG,Step.length.toString())
+                for(i in 1..Step.length-1) {
+                    if (Step[i].equals('#')) {
+                        add_list.add(temp)
+                        temp=""
+                    }
+                    else {
+                        temp = temp + Step[i]
+                        if(i == Step.length-1) { add_list.add(temp)}
+                    }
                 }
-                .addOnFailureListener { e ->
-                    Log.e(TAG, "Error adding Note document", e)
-                    Toast.makeText(applicationContext, "Note could not be added!", Toast.LENGTH_SHORT).show()
-                }
+                add.put("요리",add_list)
+            }
+            if(!binding.cooktimeIn.text.toString().equals("")) add.put("시간",binding.cooktimeIn.text.toString())
+            Log.d(TAG,add.size.toString())
+            if(add.size > 0) {
+                database!!.collection("Recipes").document(binding.foodNameIn.text.toString())
+                    .set(add)
+                    .addOnSuccessListener { documentReference ->
+                        Log.e(TAG, "DocumentSnapshot written with ID: " + documentReference)
+                        Toast.makeText(
+                            applicationContext,
+                            "Note has been added!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e(TAG, "Error adding Note document", e)
+                        Toast.makeText(
+                            applicationContext,
+                            "Note could not be added!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+            }
+            finish()
         }
     }
 }

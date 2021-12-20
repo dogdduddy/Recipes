@@ -46,10 +46,13 @@ class MainActivity : AppCompatActivity() {
                     refs.whereEqualTo(ing_hash[str[i].trim()].toString(), str[i].trim()).get()
                         .addOnSuccessListener { documents ->
                             for (document in documents) {
+                                Log.d("MainTest : ",document.toString())
                                 // 레시피 검색해서 나온 이름, 재료, 시간 저장
                                 // note 객체처럼 만들어서 처리하려 했찌만 문서마다 필드의 종류가 달라서 안됨
                                 var int_str:String = ""
                                 for(j in kind) { if(document.get(j) != null) int_str += document.get(j).toString()+" " }
+                                var a = document.get("요리") as List<String>
+                                Log.d("Testtt : ",a[0])
 
                                 recipeList.add(arrayOf(document.id, int_str, document.get("요리") as List<String>, document.get("시간").toString()))
                             }
