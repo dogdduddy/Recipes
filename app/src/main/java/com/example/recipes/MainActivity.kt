@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
             /*
             // Array 형태의 값 검
-            refs.whereArrayContains("ingredient","재료1").get().addOnSuccessListener { d ->
+            refs.whereArrayContains("ingredient","재료1" ).get().addOnSuccessListener { d ->
                 for (docu in d) {
                     var a:ArrayList<String> = docu.get("ingredient") as ArrayList<String>
                     Log.d("TestBar", a[0])
@@ -51,6 +51,13 @@ class MainActivity : AppCompatActivity() {
             }
 
              */
+            refs.whereArrayContainsAny("ingredient", listOf("재료1","재료2")).get().addOnSuccessListener { d ->
+                for (docu in d) {
+                    var a:ArrayList<String> = docu.get("ingredient") as ArrayList<String>
+                    Log.d("TestBar", a[0])
+                }
+            }
+
 
 
             for(i in 0..str.size-1) {
