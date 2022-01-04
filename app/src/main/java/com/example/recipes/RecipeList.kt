@@ -29,10 +29,9 @@ class RecipeList : AppCompatActivity() {
             val recipeList = mutableListOf<Array<Any>>()
             for(document in documents) {
                 var int_str = ""
-                //var temp = document.get("요리").toString()
-                //var cook = temp.substring(1,temp.length-1).split(". ")
                 for(j in kind) { if(document.get(j) != null) int_str += document.get(j).toString()+" " }
-                recipeList.add(arrayOf(document.id,int_str,document.get("요리") as List<String>,document.get("시간").toString()))
+                recipeList.add(arrayOf(document.id,int_str,document.get("요리") as List<String>,
+                    document.get("시간").toString()))
             }
             adapter = FindAdapter(recipeList, applicationContext, database)
             binding.ListRecyclerView.layoutManager = LinearLayoutManager(applicationContext)

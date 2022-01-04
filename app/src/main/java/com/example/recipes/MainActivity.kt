@@ -29,9 +29,7 @@ class MainActivity : AppCompatActivity() {
             var intent = Intent(this, RecipeList::class.java)
             startActivity(intent)
         }
-
-
-
+        
         binding.button.setOnClickListener{
             // 입력한 값들을 각가의 재료로 나눔
             Log.d(TAG,binding.findwindow.text.toString())
@@ -40,7 +38,21 @@ class MainActivity : AppCompatActivity() {
             val refs = database.collection("Recipes")
             // 검색 통해 나온 레시피 이름을 담는 배열
             val recipeList = mutableListOf<Array<Any>>()
-            // 입력한 재료만큼 반복 (str.size-1)인 이유는 해당 반복문은 끝의 숫자를 포함하여 넣어주기 때문.
+
+            // 입력한 재료만큼 반복 (str.size-1)인 이유는색 해당 반복문은 끝의 숫자를 포함하여 넣어주기 때문.
+
+            /*
+            // Array 형태의 값 검
+            refs.whereArrayContains("ingredient","재료1").get().addOnSuccessListener { d ->
+                for (docu in d) {
+                    var a:ArrayList<String> = docu.get("ingredient") as ArrayList<String>
+                    Log.d("TestBar", a[0])
+                }
+            }
+
+             */
+
+
             for(i in 0..str.size-1) {
                 if(ing_hash[str[i].trim()]!=null) {
                     refs.whereEqualTo(ing_hash[str[i].trim()].toString(), str[i].trim()).get()
@@ -54,7 +66,8 @@ class MainActivity : AppCompatActivity() {
                                 var a = document.get("요리") as List<String>
                                 Log.d("Testtt : ",a[0])
 
-                                recipeList.add(arrayOf(document.id, int_str, document.get("요리") as List<String>, document.get("시간").toString()))
+                                recipeList.add(arrayOf(document.id, int_str, document.get("요리") as List<String>,
+                                    document.get("시간").toString()))
                             }
                             // 원래는 반복문 밖에서 구현했지만. DB를 다 읽고 실행되는게 아니라 도중에 실행되서
                             // 원하는 데이터가 전부 들어오지 않을 때가 잇다.
