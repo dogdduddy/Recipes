@@ -20,8 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(ActivityMainBinding.inflate(layoutInflater).root)
         database = FirebaseFirestore.getInstance() // DB reference
         loadIngredient()
 
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             // 입력한 재료만큼 반복 (str.size-1)인 이유는색 해당 반복문은 끝의 숫자를 포함하여 넣어주기 때문.
 
             /*
-            // Array 형태의 값 검
+            // Array 형태의 값 검색
             refs.whereArrayContains("ingredient","재료1" ).get().addOnSuccessListener { d ->
                 for (docu in d) {
                     var a:ArrayList<String> = docu.get("ingredient") as ArrayList<String>
