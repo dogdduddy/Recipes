@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityMainBinding.inflate(layoutInflater).root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         database = FirebaseFirestore.getInstance() // DB reference
         loadIngredient()
 
@@ -28,15 +29,20 @@ class MainActivity : AppCompatActivity() {
             var intent = Intent(this, RecipeList::class.java)
             startActivity(intent)
         }
-        
+        binding.testbtn.setOnClickListener {
+            Log.d(TAG,"Testsss3333")
+        }
+        Log.d(TAG,"Testsss")
         binding.button.setOnClickListener{
+            lateinit var recipeList:MutableList<String>
             // 입력한 값들을 각가의 재료로 나눔
+            Log.d(TAG,"Testsss222")
             Log.d(TAG,binding.findwindow.text.toString())
             var str = binding.findwindow.text.toString().split(",")
+            // 검색 결과를 빈공간 제외시켜서 리스트로 변환
+            for (i in 0..str.size-1) recipeList.add(str[i].trim())
             // 식재료의 분류에 맞춰서 대입
             val refs = database.collection("Recipes")
-            // 검색 통해 나온 레시피 이름을 담는 배열
-            val recipeList = mutableListOf<Array<Any>>()
 
             // 입력한 재료만큼 반복 (str.size-1)인 이유는색 해당 반복문은 끝의 숫자를 포함하여 넣어주기 때문.
 
@@ -50,13 +56,39 @@ class MainActivity : AppCompatActivity() {
             }
 
              */
-            refs.whereArrayContainsAny("ingredient", listOf("재료1","재료2")).get().addOnSuccessListener { d ->
+            refs.whereArrayContainsAny("ingredient", recipeList).get().addOnSuccessListener { d ->
                 for (docu in d) {
                     var a:ArrayList<String> = docu.get("ingredient") as ArrayList<String>
                     Log.d("TestBar", a[0])
                 }
             }
 
+
+            refs.whereEqualTo("ingredient", str).get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        Log.d("MainTest : ",document.toString())
+                        // 레시피 검색해서 나온 이름, 재료, 시간 저장
+                        // note 객체처럼 만들어서 처리하려 했찌만 문서마다 필드의 종류가 달라서 안됨
+                        var int_str:String = ""
+                        /*
+                        for(j in kind) { if(document.get(j) != null) int_str += document.get(j).toString()+" " }
+                        var a = document.get("요리") as List<String>
+                        Log.d("Testtt : ",a[0])
+
+                        recipeList.add(arrayOf(document.id, int_str, document.get("요리") as List<String>,
+                            document.get("시간").toString()))
+
+                         */
+                    }
+                    // 원래는 반복문 밖에서 구현했지만. DB를 다 읽고 실행되는게 아니라 도중에 실행되서
+                    // 원하는 데이터가 전부 들어오지 않을 때가 잇다.
+                    // 현재는 불필요하게 많이 호출하게 되겠지만 그래도 데이터가 잘 나온다.
+                    //adapter = FindAdapter(recipeList, applicationContext, database)
+                    binding.FindrecyclerView.layoutManager = LinearLayoutManager(applicationContext)
+                    binding.FindrecyclerView.itemAnimator = DefaultItemAnimator()
+                    binding.FindrecyclerView.adapter = adapter
+                }
 
 
             for(i in 0..str.size-1) {
@@ -71,20 +103,24 @@ class MainActivity : AppCompatActivity() {
                                 for(j in kind) { if(document.get(j) != null) int_str += document.get(j).toString()+" " }
                                 var a = document.get("요리") as List<String>
                                 Log.d("Testtt : ",a[0])
-
+                                /*
                                 recipeList.add(arrayOf(document.id, int_str, document.get("요리") as List<String>,
                                     document.get("시간").toString()))
+
+                                 */
                             }
                             // 원래는 반복문 밖에서 구현했지만. DB를 다 읽고 실행되는게 아니라 도중에 실행되서
                             // 원하는 데이터가 전부 들어오지 않을 때가 잇다.
                             // 현재는 불필요하게 많이 호출하게 되겠지만 그래도 데이터가 잘 나온다.
-                            adapter = FindAdapter(recipeList, applicationContext, database)
+                            var test:MutableList<Array<Any>> = arrayListOf()
+                            adapter = FindAdapter(test, applicationContext, database)
                             binding.FindrecyclerView.layoutManager = LinearLayoutManager(applicationContext)
                             binding.FindrecyclerView.itemAnimator = DefaultItemAnimator()
                             binding.FindrecyclerView.adapter = adapter
                         }
                 }
             }
+
         }
     }
 
@@ -106,8 +142,4 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "get failed with ", exception)
             }
     }
-}
-
-private operator fun Any.get(i: Int) {
-
 }
